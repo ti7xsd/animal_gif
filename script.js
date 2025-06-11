@@ -18,7 +18,10 @@ function showFood() {
     const resultDiv = document.getElementById('result');
 
     if (food in foodAnimations) {
-        resultDiv.innerHTML = `<p>Намерена храна: ${food}</p>` + foodAnimations[food];
+        resultDiv.innerHTML = `
+            <p>Намерена храна: ${food}</p>
+            <img src="${foodAnimations[food]}" alt="${food}" class="food-gif">
+        `;
     } else {
         resultDiv.innerHTML = `<p>Храната не е намерена.</p>`;
     }
