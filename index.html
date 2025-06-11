@@ -115,7 +115,45 @@ is_vegetable(X).
     session.consult(knowledge);
 
     const foodAnimations = {
-      apple: '<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" class="food-gif" alt="Ябълка анимация" />',
-      banana: '<img src="https://media.giphy.com/media/h9Ov0QTQ3sbJC/giphy.gif" class="foo
+      apple: '<img src="https://tenor.com/ftTWpUzGyS.gif" class="food-gif" alt="Ябълка анимация" />',
+       banana: '<img src="https://tenor.com/phqSf4keFE0.gif" class="food-gif" alt="Банан анимация" />',
+       pizza: '<img src="https://tenor.com/qUfWyJc3VtT.gif" class="food-gif" alt="Пица анимация" />',
+      broccoli: '<img src="https://tenor.com/8RKS.gif" class="food-gif" alt="Броколи анимация" />',
+      burger: '<img src="https://tenor.com/p6HkJPEqWYN.gif" class="food-gif" alt="Бургер анимация" />'
+    };
 
+    function runProlog() {
+      const input = document.getElementById("prolog-input").value;
+      const resultDiv = document.getElementById("result");
+      const animDiv = document.getElementById("food-animation");
 
+      resultDiv.innerHTML = "";
+      animDiv.innerHTML = "";
+
+      session.query(input);
+      session.answers(answer => {
+        if(answer === false) {
+          resultDiv.innerHTML += `<p>Няма повече резултати.</p>`;
+          return;
+        }
+        const str = pl.format_answer(answer);
+        if (str === "false.") {
+          resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
+          return;
+        }
+        resultDiv.innerHTML += `<p>${str}</p>`;
+
+        const match = str.match(/X = (\w+)/);
+        if (match) {
+          const food = match[1];
+          if (foodAnimations[food]) {
+            animDiv.innerHTML = foodAnimations[food];
+          } else {
+            animDiv.innerHTML = "<p>Няма GIF за тази храна.</p>";
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
